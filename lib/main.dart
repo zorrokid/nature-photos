@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nature_photos/start_page.dart';
 
 import 'bloc/user/user_bloc.dart';
 import 'firebase_options.dart';
@@ -31,37 +32,6 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: const StartPage(),
-      ),
-    );
-  }
-}
-
-class StartPage extends StatelessWidget {
-  const StartPage({super.key});
-
-  void _addPhoto() => print('Add photo');
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Nature photos'),
-      ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Wellcome to nature photos!',
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addPhoto,
-        tooltip: 'Add photo',
-        child: const Icon(Icons.add),
       ),
     );
   }
