@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "610672394069",
+    "project_id": "flutter-nature-photos",
+    "storage_bucket": "flutter-nature-photos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610672394069:android:8f9f0ad0e82491609979dc",
+        "android_client_info": {
+          "package_name": "com.example.nature_photos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610672394069-n2eapslhm9nu1rtmc2fqk4qvbdclbcpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSKYNvqVmXXG8hEke8HcSAUFwEj-D5_qM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610672394069-n2eapslhm9nu1rtmc2fqk4qvbdclbcpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
