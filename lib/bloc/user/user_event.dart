@@ -10,3 +10,10 @@ class InitializeUserState extends UserEvent {
   @override
   List<Object> get props => [];
 }
+
+class LogOutUser extends UserEvent {
+  const LogOutUser();
+
+  @override
+  List<Object> get props => [];
+}

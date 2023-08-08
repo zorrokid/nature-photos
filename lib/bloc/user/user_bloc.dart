@@ -9,6 +9,7 @@ import 'package:nature_photos/bloc/user/user_status.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc() : super(const UserState()) {
     on<InitializeUserState>(_onInitializeUserState);
+    on<LogOutUser>(_onLogOutUser);
   }
 
   FutureOr<void> _onInitializeUserState(
@@ -38,5 +39,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         user: user,
       ));
     }
+  }
+
+  Future<void> _onLogOutUser(LogOutUser event, Emitter<UserState> emit) async {
+    await FirebaseAuth.instance.signOut();
+    emit(state.copyWith(
+      status: UserStatus.loggedOut,
+      user: null,
+    ));
   }
 }
