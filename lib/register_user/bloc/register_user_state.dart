@@ -1,26 +1,27 @@
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nature_photos/register_user/bloc/register_user_status.dart';
+
+import '../../enums.dart';
 
 class RegisterUserState extends Equatable {
   const RegisterUserState({
     this.email = '',
     this.password = '',
-    this.status = RegisterUserStatus.initial,
+    this.status = UserFormStatus.initial,
     this.userCredential,
     this.error,
   });
 
   final String email;
   final String password;
-  final RegisterUserStatus status;
+  final UserFormStatus status;
   final UserCredential? userCredential;
   final String? error;
 
   RegisterUserState copyWith({
     String? email,
     String? password,
-    RegisterUserStatus? status,
+    UserFormStatus? status,
     UserCredential? userCredential,
     String? error,
   }) {

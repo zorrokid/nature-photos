@@ -1,35 +1,30 @@
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-import 'login_user_status.dart';
+import '../../enums.dart';
 
-class LoginUserState extends Equatable {
-  const LoginUserState({
+class LogInUserState extends Equatable {
+  const LogInUserState({
     this.email = '',
     this.password = '',
-    this.status = LoginUserStatus.initial,
-    this.userCredential,
+    this.status = UserFormStatus.initial,
     this.error,
   });
 
   final String email;
   final String password;
-  final LoginUserStatus status;
-  final UserCredential? userCredential;
+  final UserFormStatus status;
   final String? error;
 
-  LoginUserState copyWith({
+  LogInUserState copyWith({
     String? email,
     String? password,
-    LoginUserStatus? status,
-    UserCredential? userCredential,
+    UserFormStatus? status,
     String? error,
   }) {
-    return LoginUserState(
+    return LogInUserState(
       email: email ?? this.email,
       password: password ?? this.password,
       status: status ?? this.status,
-      userCredential: userCredential ?? this.userCredential,
       error: error ?? this.error,
     );
   }
@@ -39,7 +34,6 @@ class LoginUserState extends Equatable {
         email,
         password,
         status,
-        userCredential,
         error,
       ];
 }

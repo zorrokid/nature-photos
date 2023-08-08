@@ -4,8 +4,8 @@ abstract class LoginUserEvent extends Equatable {
   const LoginUserEvent();
 }
 
-class LoginUser extends LoginUserEvent {
-  const LoginUser({
+class LogInUser extends LoginUserEvent {
+  const LogInUser({
     required this.email,
     required this.password,
   });

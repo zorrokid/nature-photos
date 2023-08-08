@@ -1,4 +1,4 @@
-enum RegisterUserStatus {
+enum UserFormStatus {
   initial,
   submitting,
   success,

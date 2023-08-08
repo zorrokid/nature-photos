@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nature_photos/bloc/user/user_bloc.dart';
+import 'package:nature_photos/bloc/user/user_status.dart';
 
 import '../add_photo/add_photo_page.dart';
 import '../bloc/user/user_event.dart';
 import '../bloc/user/user_state.dart';
-import '../bloc/user/user_status.dart';
 import '../register_user/register_user_page.dart';
 import '../login_user/login_user_page.dart';
 

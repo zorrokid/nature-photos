@@ -32,7 +32,10 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<UserBloc>(
-            create: (_) => UserBloc()..add(const InitializeUserState()),
+            create: (BuildContext context) => UserBloc(
+                authenticationRepository:
+                    context.read<AuthenticationRepository>())
+              ..add(const InitializeUserState()),
           ),
         ],
         child: MaterialApp(
