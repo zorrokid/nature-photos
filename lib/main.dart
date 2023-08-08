@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nature_photos/bloc/user/user_event.dart';
 import 'package:nature_photos/repositories/authentication_repository.dart';
 import 'package:nature_photos/start_page/start_page.dart';
 
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<UserBloc>(
-            create: (_) => UserBloc(),
+            create: (_) => UserBloc()..add(const InitializeUserState()),
           ),
         ],
         child: MaterialApp(

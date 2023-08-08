@@ -58,6 +58,16 @@ class RegisterUserForm extends StatelessWidget {
     }
   }
 
+  void _submit(BuildContext context) {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      return;
+    }
+    context.read<RegisterUserBloc>().add(RegisterUser(
+          email: _emailController.text,
+          password: _passwordController.text,
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterUserBloc, RegisterUserState>(
@@ -70,14 +80,7 @@ class RegisterUserForm extends StatelessWidget {
         floatingActionButton: state.status == RegisterUserStatus.submitting
             ? null
             : FloatingActionButton(
-                onPressed: () {
-                  if (_emailController.text.isEmpty ||
-                      _passwordController.text.isEmpty) return;
-                  context.read<RegisterUserBloc>().add(RegisterUser(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                      ));
-                },
+                onPressed: () => _submit(context),
                 child: const Icon(Icons.check),
               ),
       );
