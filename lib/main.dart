@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:nature_photos/bloc/user/user_event.dart';
 import 'package:nature_photos/repositories/authentication_repository.dart';
 import 'package:nature_photos/start_page/start_page.dart';
+import 'package:nature_photos/store_binding.dart';
 
 import 'bloc/user/user_bloc.dart';
 import 'firebase_options.dart';
@@ -38,7 +40,8 @@ class MyApp extends StatelessWidget {
               ..add(const InitializeUserState()),
           ),
         ],
-        child: MaterialApp(
+        child: GetMaterialApp(
+          initialBinding: StoreBinding(),
           title: 'Nature photos',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

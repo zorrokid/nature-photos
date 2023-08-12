@@ -1,14 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class RegisterUserFailure implements Exception {
-  const RegisterUserFailure({
+class AuthFailure implements Exception {
+  const AuthFailure({
     required this.message,
   });
 
   final String message;
 
-  RegisterUserFailure.fromCode(String code)
-      : message = _createErrorMessage(code);
+  AuthFailure.fromCode(String code) : message = _createErrorMessage(code);
 
   static String _createErrorMessage(String code) {
     print(code);
@@ -19,26 +18,6 @@ class RegisterUserFailure implements Exception {
         return 'The password provided is too weak.';
       case 'email-already-in-use':
         return 'The account already exists for that email.';
-      default:
-        return 'An unknown error occurred.';
-    }
-  }
-}
-
-class LogInFailure implements Exception {
-  const LogInFailure({
-    required this.message,
-  });
-
-  final String message;
-
-  LogInFailure.fromCode(String code) : message = _createErrorMessage(code);
-
-  static String _createErrorMessage(String code) {
-    print(code);
-    switch (code) {
-      case 'invalid-email':
-        return 'The email address is not valid.';
       case 'wrong-password':
         return 'The password is incorrect.';
       case 'user-not-found':
@@ -61,10 +40,10 @@ class AuthenticationRepository {
         password: password,
       );
       return userCredential;
-    } on FirebaseException catch (e) {
-      throw RegisterUserFailure.fromCode(e.code);
+    } on FirebaseAuthException catch (e) {
+      throw AuthFailure.fromCode(e.code);
     } on Exception catch (_) {
-      throw const RegisterUserFailure(
+      throw const AuthFailure(
         message: 'An unknown error occurred.',
       );
     }
@@ -81,10 +60,10 @@ class AuthenticationRepository {
         password: password,
       );
       return userCredential.user!;
-    } on FirebaseException catch (e) {
-      throw LogInFailure.fromCode(e.code);
+    } on FirebaseAuthException catch (e) {
+      throw AuthFailure.fromCode(e.code);
     } on Exception catch (_) {
-      throw const LogInFailure(
+      throw const AuthFailure(
         message: 'An unknown error occurred.',
       );
     }
@@ -93,5 +72,30 @@ class AuthenticationRepository {
   bool isUserLoggedIn() {
     final currentUser = FirebaseAuth.instance.currentUser;
     return currentUser != null;
+  }
+
+  Future<void> logOutUser() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  /*
+Are these needed?
+auth/missing-continue-uri
+  A continue URL must be provided in the request.
+auth/invalid-continue-uri
+  The continue URL provided in the request is invalid.
+auth/unauthorized-continue-uri
+  The domain of the continue URL is not whitelisted. Whitelist the domain in the Firebase console.
+*/
+  Future<void> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw AuthFailure.fromCode(e.code);
+    } on Exception catch (_) {
+      throw const AuthFailure(
+        message: 'An unknown error occurred.',
+      );
+    }
   }
 }

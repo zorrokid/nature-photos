@@ -27,7 +27,7 @@ class LogInUserBloc extends Bloc<LoginUserEvent, LogInUserState> {
       emit(state.copyWith(
         status: UserFormStatus.success,
       ));
-    } on LogInFailure catch (e) {
+    } on AuthFailure catch (e) {
       emit(state.copyWith(
         status: UserFormStatus.failure,
         error: e.message,

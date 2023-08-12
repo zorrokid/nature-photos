@@ -28,7 +28,7 @@ class RegisterUserBloc extends Bloc<RegisterUserEvent, RegisterUserState> {
         status: UserFormStatus.success,
         userCredential: userCredential,
       ));
-    } on RegisterUserFailure catch (e) {
+    } on AuthFailure catch (e) {
       emit(state.copyWith(
         status: UserFormStatus.failure,
         error: e.message,

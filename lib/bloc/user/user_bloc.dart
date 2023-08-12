@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nature_photos/bloc/user/user_event.dart';
 import 'package:nature_photos/bloc/user/user_state.dart';
@@ -11,7 +10,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc({required this.authenticationRepository})
       : super(const UserState()) {
     on<InitializeUserState>(_onInitializeUserState);
-    on<LogOutUser>(_onLogOutUser);
   }
 
   final AuthenticationRepository authenticationRepository;
@@ -55,12 +53,4 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       ));
     }
   }*/
-
-  Future<void> _onLogOutUser(LogOutUser event, Emitter<UserState> emit) async {
-    await FirebaseAuth.instance.signOut();
-    emit(state.copyWith(
-      status: UserStatus.loggedOut,
-      user: null,
-    ));
-  }
 }

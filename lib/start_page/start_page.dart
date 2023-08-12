@@ -4,10 +4,14 @@ import 'package:nature_photos/bloc/user/user_bloc.dart';
 import 'package:nature_photos/bloc/user/user_status.dart';
 
 import '../add_photo/add_photo_page.dart';
-import '../bloc/user/user_event.dart';
+import '../bloc/user/auth_bloc.dart';
+import '../bloc/user/auth_event.dart';
 import '../bloc/user/user_state.dart';
 import '../register_user/register_user_page.dart';
 import '../login_user/login_user_page.dart';
+import '../register_user/register_user_view.dart';
+import '../reset_password/reset_password_page.dart';
+import '../widgets/default_drawer.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({super.key});
@@ -25,11 +29,18 @@ class StartPage extends StatelessWidget {
       );
 
   void _logOut(BuildContext context) =>
-      context.read<UserBloc>().add(const LogOutUser());
+      context.read<AuthBloc>().add(const LogOutUser());
 
   void _navigateToRegister(BuildContext context) => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (_) => const RegisterUserPage(),
+          builder: (_) => RegisterUserView(),
+        ),
+      );
+
+  void _navigateToResetPassword(BuildContext context) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => const ResetPasswordPage(),
         ),
       );
 
@@ -54,6 +65,10 @@ class StartPage extends StatelessWidget {
               onPressed: () => _navigateToRegister(context),
               child: const Text('Register'),
             ),
+            TextButton(
+              onPressed: () => _navigateToResetPassword(context),
+              child: const Text('Reset password'),
+            )
           ],
         ),
       ),
@@ -66,6 +81,7 @@ class StartPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Nature photos'),
       ),
+      drawer: const DefaultDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
