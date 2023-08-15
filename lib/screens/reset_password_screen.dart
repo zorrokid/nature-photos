@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nature_photos/controllers/reset_password_controller.dart';
 
-class ResetPasswordPage extends StatelessWidget {
-  const ResetPasswordPage({super.key});
+class ResetPasswordScreen extends StatelessWidget {
+  ResetPasswordScreen({super.key});
+  final resetPasswordController = Get.put(ResetPasswordController());
+  Future<void> resetPassword() async =>
+      await resetPasswordController.resetPassword();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +28,7 @@ class ResetPasswordPage extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: resetPassword,
           child: const Icon(Icons.send),
         ));
   }

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nature_photos/register_user/register_user_controller.dart';
 
 import '../enums.dart';
+import '../controllers/login_controller.dart';
 
-//class RegisterUserView extends GetView {
-class RegisterUserView extends StatelessWidget {
-  RegisterUserView({super.key});
-  //final registerUserControlelr = Get.find<RegisterUserController>();
-  final registerUserController = Get.put(RegisterUserController());
+class LogInUserScreen extends StatelessWidget {
+  LogInUserScreen({super.key});
+  final registerUserController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register User'),
+        title: const Text('Log in user'),
       ),
       body: Obx(
         () => Column(

@@ -1,4 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+
+import '../screens/start_screen.dart';
 
 class AuthFailure implements Exception {
   const AuthFailure({
@@ -10,7 +13,6 @@ class AuthFailure implements Exception {
   AuthFailure.fromCode(String code) : message = _createErrorMessage(code);
 
   static String _createErrorMessage(String code) {
-    print(code);
     switch (code) {
       case 'invalid-email':
         return 'The email address is not valid.';
@@ -74,9 +76,7 @@ class AuthenticationRepository {
     return currentUser != null;
   }
 
-  Future<void> logOutUser() async {
-    await FirebaseAuth.instance.signOut();
-  }
+  Future<void> logOutUser() async => await FirebaseAuth.instance.signOut();
 
   /*
 Are these needed?
@@ -90,6 +90,12 @@ auth/unauthorized-continue-uri
   Future<void> resetPassword(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      Get.snackbar(
+        "Password reset",
+        "Password reset email sent",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      Get.to(() => const StartScreen());
     } on FirebaseAuthException catch (e) {
       throw AuthFailure.fromCode(e.code);
     } on Exception catch (_) {

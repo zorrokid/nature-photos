@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nature_photos/screens/view_account_screen.dart';
+
+import '../controllers/logout_controller.dart';
+import '../screens/add_photo_screen.dart';
 
 class DefaultDrawer extends StatelessWidget {
-  const DefaultDrawer({super.key});
+  DefaultDrawer({super.key});
+
+  final _logOutController = Get.put(LogOutController());
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +20,15 @@ class DefaultDrawer extends StatelessWidget {
       ),
       ListTile(
         title: const Text('Add photo'),
-        onTap: () => {/* TODO */},
+        onTap: () => Get.to(() => const AddPhotoScreen()),
       ),
       ListTile(
         title: const Text('Account'),
-        onTap: () => {/* TODO */},
+        onTap: () => Get.to(() => ViewAccountScreen()),
       ),
       ListTile(
         title: const Text('Log out'),
-        onTap: () => {/* TODO */},
+        onTap: () => _logOutController.logOut(),
       ),
     ]));
   }

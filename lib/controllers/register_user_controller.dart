@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:nature_photos/enums.dart';
 import 'package:nature_photos/repositories/authentication_repository.dart';
 
+import '../screens/start_screen.dart';
+
 class RegisterUserController extends GetxController {
   final email = "".obs;
   final password = "".obs;
@@ -10,7 +12,7 @@ class RegisterUserController extends GetxController {
   final status = UserFormStatus.initial.obs;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final repository = Get.find<AuthenticationRepository>();
+  final _authenticationRepository = Get.find<AuthenticationRepository>();
 
   String? validator(String? value) {
     if (value == null || value.isEmpty) {
@@ -19,9 +21,9 @@ class RegisterUserController extends GetxController {
     return null;
   }
 
-  void submitForm() async {
+  Future<void> submitForm() async {
     try {
-      await repository.registerUser(
+      await _authenticationRepository.registerUser(
           email: emailController.value.text,
           password: emailController.value.text);
       Get.snackbar(
@@ -29,6 +31,7 @@ class RegisterUserController extends GetxController {
         "User registered",
         snackPosition: SnackPosition.BOTTOM,
       );
+      Get.to(() => const StartScreen());
     } on AuthFailure catch (e) {
       error.value = e.message;
       status.value = UserFormStatus.failure;
