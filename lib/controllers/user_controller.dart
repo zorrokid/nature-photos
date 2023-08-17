@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:nature_photos/bindings/home_binding.dart';
 
+import '../bindings/sign_up_binding.dart';
 import '../screens/sign_up_or_sign_in_screen.dart';
 import '../screens/start_screen.dart';
 
@@ -21,9 +23,11 @@ class UserController extends GetxController {
 
   _setInitialScreen(User? user) {
     if (user == null) {
-      Get.offAll(() => const SignUpOrSignInScreen());
+      print('user is null, go to sign up or sign in');
+      Get.offAll(const SignUpOrSignInScreen(), binding: SignUpBinding());
     } else {
-      Get.offAll(() => const StartScreen());
+      print('user is logged in, go to start screen');
+      Get.offAll(const StartScreen(), binding: HomeBinding());
     }
   }
 }

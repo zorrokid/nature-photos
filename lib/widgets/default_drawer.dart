@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nature_photos/bindings/view_account_binding.dart';
 import 'package:nature_photos/screens/view_account_screen.dart';
 
 import '../controllers/logout_controller.dart';
@@ -24,7 +25,8 @@ class DefaultDrawer extends StatelessWidget {
       ),
       ListTile(
         title: const Text('Account'),
-        onTap: () => Get.to(() => ViewAccountScreen()),
+        onTap: () =>
+            Get.to(() => ViewAccountScreen(), binding: ViewAccountBinding()),
       ),
       ListTile(
         title: const Text('Log out'),

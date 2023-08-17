@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../bindings/login_binding.dart';
+import '../bindings/register_binding.dart';
+import '../bindings/reset_password_binding.dart';
 import 'login_user_screen.dart';
 import 'register_user_screen.dart';
 import 'reset_password_screen.dart';
@@ -24,16 +27,18 @@ class SignUpOrSignInScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Get.to(() => LogInUserScreen());
+                Get.to(() => LogInUserScreen(), binding: LoginBinding());
               },
               child: const Text('Log in'),
             ),
             TextButton(
-              onPressed: () => Get.to(() => RegisterUserScreen()),
+              onPressed: () => Get.to(() => RegisterUserScreen(),
+                  binding: RegisterBinding()),
               child: const Text('Register'),
             ),
             TextButton(
-              onPressed: () => Get.to(() => ResetPasswordScreen()),
+              onPressed: () => Get.to(() => ResetPasswordScreen(),
+                  binding: ResetPasswordBinding()),
               child: const Text('Reset password'),
             )
           ],
