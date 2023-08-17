@@ -6,10 +6,8 @@ import 'package:nature_photos/screens/view_account_screen.dart';
 import '../controllers/logout_controller.dart';
 import '../screens/add_photo_screen.dart';
 
-class DefaultDrawer extends StatelessWidget {
-  DefaultDrawer({super.key});
-
-  final _logOutController = Get.put(LogOutController());
+class DefaultDrawer extends GetView<LogOutController> {
+  const DefaultDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +23,12 @@ class DefaultDrawer extends StatelessWidget {
       ),
       ListTile(
         title: const Text('Account'),
-        onTap: () =>
-            Get.to(() => ViewAccountScreen(), binding: ViewAccountBinding()),
+        onTap: () => Get.to(() => const ViewAccountScreen(),
+            binding: ViewAccountBinding()),
       ),
       ListTile(
         title: const Text('Log out'),
-        onTap: () => _logOutController.logOut(),
+        onTap: () => controller.logOut(),
       ),
     ]));
   }

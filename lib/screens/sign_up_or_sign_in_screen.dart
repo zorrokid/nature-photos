@@ -27,17 +27,17 @@ class SignUpOrSignInScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Get.to(() => LogInUserScreen(), binding: LoginBinding());
+                Get.to(() => const LogInUserScreen(), binding: LoginBinding());
               },
               child: const Text('Log in'),
             ),
             TextButton(
-              onPressed: () => Get.to(() => RegisterUserScreen(),
+              onPressed: () => Get.to(() => const RegisterUserScreen(),
                   binding: RegisterBinding()),
               child: const Text('Register'),
             ),
             TextButton(
-              onPressed: () => Get.to(() => ResetPasswordScreen(),
+              onPressed: () => Get.to(() => const ResetPasswordScreen(),
                   binding: ResetPasswordBinding()),
               child: const Text('Reset password'),
             )

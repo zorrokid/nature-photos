@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nature_photos/controllers/reset_password_controller.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
-  ResetPasswordScreen({super.key});
-  final resetPasswordController = Get.put(ResetPasswordController());
-  Future<void> resetPassword() async =>
-      await resetPasswordController.resetPassword();
+class ResetPasswordScreen extends GetView<ResetPasswordController> {
+  const ResetPasswordScreen({super.key});
+  Future<void> resetPassword() async => await controller.resetPassword();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
