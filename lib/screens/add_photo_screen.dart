@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AddPhotoPage extends StatelessWidget {
-  const AddPhotoPage({super.key});
+class AddPhotoScreen extends StatelessWidget {
+  const AddPhotoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -24,14 +24,14 @@ class UserForm extends StatelessWidget {
       default:
         return Column(
           children: [
-            TextField(
+            TextFormField(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Email',
               ),
               controller: _emailController,
             ),
-            TextField(
+            TextFormField(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Password',

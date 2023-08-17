@@ -1,4 +1,0 @@
-enum UserStatus {
-  loggedIn,
-  loggedOut,
-}

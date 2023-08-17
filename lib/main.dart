@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nature_photos/bloc/user/user_event.dart';
-import 'package:nature_photos/repositories/authentication_repository.dart';
-import 'package:nature_photos/start_page/start_page.dart';
+import 'package:get/get.dart';
+import 'package:nature_photos/screens/sign_up_or_sign_in_screen.dart';
 
-import 'bloc/user/user_bloc.dart';
+import 'bindings/home_binding.dart';
+import 'controllers/user_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,7 +12,9 @@ void main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ).then((value) {
+    Get.put(UserController());
+  });
 
   runApp(const MyApp());
 }
@@ -23,30 +24,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<AuthenticationRepository>(
-          create: (_) => AuthenticationRepository(),
-        ),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<UserBloc>(
-            create: (BuildContext context) => UserBloc(
-                authenticationRepository:
-                    context.read<AuthenticationRepository>())
-              ..add(const InitializeUserState()),
-          ),
-        ],
-        child: MaterialApp(
-          title: 'Nature photos',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          home: const StartPage(),
-        ),
+    return GetMaterialApp(
+      initialBinding: HomeBinding(),
+      title: 'Nature photos',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
+      home: const SignUpOrSignInScreen(),
     );
   }
 }
