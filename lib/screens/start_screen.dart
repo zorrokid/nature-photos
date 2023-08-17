@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nature_photos/bindings/add_photo_binding.dart';
 
 import 'add_photo_screen.dart';
 import '../widgets/default_drawer.dart';
@@ -14,7 +15,7 @@ class StartScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Nature photos'),
       ),
-      drawer: DefaultDrawer(),
+      drawer: const DefaultDrawer(),
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +27,10 @@ class StartScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.to(() => const AddPhotoScreen()),
+        onPressed: () => Get.to(
+          () => const AddPhotoScreen(),
+          binding: AddPhotoBinding(),
+        ),
         tooltip: 'Add photo',
         child: const Icon(Icons.add),
       ),
