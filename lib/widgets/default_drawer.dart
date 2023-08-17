@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nature_photos/bindings/add_photo_binding.dart';
 import 'package:nature_photos/bindings/view_account_binding.dart';
 import 'package:nature_photos/screens/view_account_screen.dart';
 
@@ -19,7 +20,10 @@ class DefaultDrawer extends GetView<LogOutController> {
       ),
       ListTile(
         title: const Text('Add photo'),
-        onTap: () => Get.to(() => const AddPhotoScreen()),
+        onTap: () => Get.to(
+          () => const AddPhotoScreen(),
+          binding: AddPhotoBinding(),
+        ),
       ),
       ListTile(
         title: const Text('Account'),
