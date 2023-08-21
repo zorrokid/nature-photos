@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "610672394069",
+    "firebase_url": "https://flutter-nature-photos-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "flutter-nature-photos",
     "storage_bucket": "flutter-nature-photos.appspot.com"
   },
