@@ -23,9 +23,16 @@ class AddPhotoScreen extends GetView<AddPhotoController> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async => await controller.pickImage(),
-        child: const Icon(Icons.photo),
+      floatingActionButton: Obx(
+        () => controller.imageFile.value == null
+            ? FloatingActionButton(
+                onPressed: () async => await controller.pickImage(),
+                child: const Icon(Icons.photo),
+              )
+            : FloatingActionButton(
+                onPressed: () async => await controller.uploadImage(),
+                child: const Icon(Icons.upload),
+              ),
       ),
     );
   }
