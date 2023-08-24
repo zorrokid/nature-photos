@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:exif/exif.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nature_photos/models/upload_file_info.dart';
@@ -26,8 +27,13 @@ class AddPhotoController extends GetxController {
   Future<void> uploadImage() async {
     if (imageFile.value == null) return;
 
+    final exif = await _readExif();
+
+    final exifData = parseExif(exif);
+
     final uploadFileInfo = UploadFileInfo(
       fileName: basename(imageFile.value!.path),
+      exifData: exifData,
     );
     final id = await databaseRepository.saveData(uploadFileInfo);
     if (id == null) return; // TODO: handle error
@@ -35,4 +41,18 @@ class AddPhotoController extends GetxController {
     Get.snackbar("Upload", "File uploaded");
     Get.to(() => const StartScreen());
   }
+
+  Future<Map<String, dynamic>> _readExif() async {
+    final fileBytes = imageFile.value!.readAsBytesSync();
+    final exifData = await readExifFromBytes(fileBytes);
+    return exifData;
+  }
+
+  ExifData parseExif(Map<String, dynamic> exifData) {
+    return ExifData();
+  }
+}
+
+class ExifData {
+  Map<String, dynamic> toJson() => {};
 }
