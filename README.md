@@ -1,6 +1,12 @@
 # nature_photos
 
-A new Flutter project.
+## TODO
+
+- protect google maps api key (restrict usage to android app - api key for each version)
+
+# Development
+
+- https://console.cloud.google.com/welcome?project=flutter-nature-photos
 
 ## Getting Started
 

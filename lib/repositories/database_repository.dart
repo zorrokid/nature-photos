@@ -10,4 +10,14 @@ class DatabaseRepository {
         .add(uploadFileInfo.toJson());
     return ref.id;
   }
+
+  Future<List<UploadFileInfo>> getUploadFileInfo() async {
+    final database = FirebaseFirestore.instance;
+    final snapshot = await database.collection("uploadFileInfo").get();
+    final uploadFileInfo = snapshot.docs
+        .map((doc) =>
+            UploadFileInfo.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
+    return uploadFileInfo;
+  }
 }
