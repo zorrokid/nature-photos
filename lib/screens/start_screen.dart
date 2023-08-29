@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nature_photos/bindings/add_photo_binding.dart';
 
+import '../controllers/start_controller.dart';
+import '../widgets/upload_file_info_list.dart';
 import 'add_photo_screen.dart';
 import '../widgets/default_drawer.dart';
 
-class StartScreen extends StatelessWidget {
+class StartScreen extends GetView<StartController> {
   const StartScreen({super.key});
 
   @override
@@ -16,16 +18,17 @@ class StartScreen extends StatelessWidget {
         title: const Text('Nature photos'),
       ),
       drawer: const DefaultDrawer(),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Wellcome to nature photos!',
-            ),
-          ],
-        ),
-      ),
+      body: Center(
+          child: Obx(
+        () => controller.initializing.value == true
+            ? const CircularProgressIndicator()
+            : UploadFileInfoList(
+                uploadFileInfoList: controller.uploadFileInfo,
+                onShow: (uploadFileInfo) {
+                  controller.showMap(uploadFileInfo);
+                },
+              ),
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.to(
           () => const AddPhotoScreen(),

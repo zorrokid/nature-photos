@@ -12,4 +12,8 @@ class UploadFileInfo {
         'fileName': fileName,
         'exifData': exifData.toJson(),
       };
+  static UploadFileInfo fromJson(Map<String, dynamic> json) => UploadFileInfo(
+        fileName: json['fileName'] as String,
+        exifData: ExifData.fromJson(json['exifData'] as Map<String, dynamic>),
+      );
 }
