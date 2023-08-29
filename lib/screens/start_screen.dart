@@ -22,7 +22,12 @@ class StartScreen extends GetView<StartController> {
           child: Obx(
         () => controller.initializing.value == true
             ? const CircularProgressIndicator()
-            : UploadFileInfoList(uploadFileInfoList: controller.uploadFileInfo),
+            : UploadFileInfoList(
+                uploadFileInfoList: controller.uploadFileInfo,
+                onShow: (uploadFileInfo) {
+                  controller.showMap(uploadFileInfo);
+                },
+              ),
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.to(

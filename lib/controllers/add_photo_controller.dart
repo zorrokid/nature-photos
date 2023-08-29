@@ -8,6 +8,7 @@ import 'package:nature_photos/repositories/database_repository.dart';
 import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:path/path.dart';
 
+import '../bindings/start_binding.dart';
 import '../screens/start_screen.dart';
 
 class AddPhotoController extends GetxController {
@@ -39,7 +40,7 @@ class AddPhotoController extends GetxController {
     if (id == null) return; // TODO: handle error
     await storageRepository.uploadFile('images', imageFile.value!, id);
     Get.snackbar("Upload", "File uploaded");
-    Get.to(() => const StartScreen());
+    Get.to(() => StartScreen(), binding: StartBinding());
   }
 
   Future<Map<String, dynamic>> _readExif() async {
