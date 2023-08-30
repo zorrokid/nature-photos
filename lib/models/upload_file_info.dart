@@ -1,19 +1,25 @@
-import 'package:nature_photos/controllers/add_photo_controller.dart';
+import 'exif_data.dart';
 
 class UploadFileInfo {
   UploadFileInfo({
     required this.fileName,
+    required this.extension,
     required this.exifData,
   });
   final String fileName;
-  final ExifData exifData;
+  final String extension;
+  final ExifMetaData exifData;
 
   Map<String, dynamic> toJson() => {
         'fileName': fileName,
+        'extension': extension,
         'exifData': exifData.toJson(),
       };
   static UploadFileInfo fromJson(Map<String, dynamic> json) => UploadFileInfo(
         fileName: json['fileName'] as String,
-        exifData: ExifData.fromJson(json['exifData'] as Map<String, dynamic>),
+        extension:
+            json.containsKey('extension') ? json['extension'] as String : '',
+        exifData:
+            ExifMetaData.fromJson(json['exifData'] as Map<String, dynamic>),
       );
 }

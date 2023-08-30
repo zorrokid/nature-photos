@@ -23,6 +23,12 @@ class MapScreen extends GetView<MapController> {
       body: GoogleMap(
         mapType: MapType.hybrid,
         initialCameraPosition: CameraPosition(target: location, zoom: 11),
+        markers: {
+          Marker(
+            markerId: const MarkerId('photo_location'),
+            position: location,
+          )
+        },
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },

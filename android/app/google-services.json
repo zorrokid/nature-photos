@@ -21,7 +21,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBSKYNvqVmXXG8hEke8HcSAUFwEj-D5_qM"
+          "current_key": "AIzaSyDbGPdYQ9vX6vEN5wB_n79Le4ie2tB9qZk"
         }
       ],
       "services": {
@@ -30,6 +30,13 @@
             {
               "client_id": "610672394069-n2eapslhm9nu1rtmc2fqk4qvbdclbcpl.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "610672394069-kapvf8fai4hh3s8q3a3o53j3p7m8gm5j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.naturePhotos"
+              }
             }
           ]
         }
