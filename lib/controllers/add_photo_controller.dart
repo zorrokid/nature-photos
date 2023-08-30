@@ -9,6 +9,7 @@ import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:path/path.dart';
 
 import '../bindings/start_binding.dart';
+import '../models/exif_data.dart';
 import '../screens/start_screen.dart';
 
 class AddPhotoController extends GetxController {
@@ -27,20 +28,20 @@ class AddPhotoController extends GetxController {
 
   Future<void> uploadImage() async {
     if (imageFile.value == null) return;
-
     final exif = await _readExif();
-
     final exifData = parseExif(exif);
-
     final uploadFileInfo = UploadFileInfo(
-      fileName: basename(imageFile.value!.path),
+      fileName: basenameWithoutExtension(imageFile.value!.path),
+      extension: extension(imageFile.value!.path),
       exifData: exifData,
     );
     final id = await databaseRepository.saveData(uploadFileInfo);
     if (id == null) return; // TODO: handle error
-    await storageRepository.uploadFile('images', imageFile.value!, id);
+    await storageRepository.uploadFile(
+        'upload', imageFile.value!, '$id.${uploadFileInfo.extension}');
     Get.snackbar("Upload", "File uploaded");
-    Get.to(() => StartScreen(), binding: StartBinding());
+    imageFile.value = null;
+    Get.to(() => const StartScreen(), binding: StartBinding());
   }
 
   Future<Map<String, dynamic>> _readExif() async {
@@ -49,7 +50,7 @@ class AddPhotoController extends GetxController {
     return exifData;
   }
 
-  ExifData parseExif(Map<String, dynamic> exifData) {
+  ExifMetaData parseExif(Map<String, dynamic> exifData) {
     /* 
 GPSVersionID
 Indicates the version of GPSInfoIFD. The version is given as 2.3.0.0. This tag is mandatory when
@@ -131,9 +132,7 @@ East longitudes (locations East of the Greenwich meridian) are negative.
       final longitudeDecimalDegrees =
           londegrees + lonminutes / 60 + lonSeconds / 3600;
 
-      // 64.2345601516302, 27.734142825632148
-
-      return ExifData()
+      return ExifMetaData()
         ..latitude = exiflatitudeRef!.printable == "N"
             ? latitudeDecimalDegrees
             : -latitudeDecimalDegrees
@@ -141,24 +140,6 @@ East longitudes (locations East of the Greenwich meridian) are negative.
             ? longitudeDecimalDegrees
             : -longitudeDecimalDegrees;
     }
-    return ExifData();
-  }
-}
-
-class ExifData {
-  double? latitude;
-  double? longitude;
-  Map<String, dynamic> toJson() => {
-        "latitude": latitude,
-        "longitude": longitude,
-      };
-
-  static ExifData fromJson(Map<String, dynamic> json) => ExifData()
-    ..latitude = json["latitude"] as double?
-    ..longitude = json["longitude"] as double?;
-
-  @override
-  String toString() {
-    return "latitude: $latitude, longitude: $longitude";
+    return ExifMetaData();
   }
 }

@@ -15,8 +15,7 @@ class DatabaseRepository {
     final database = FirebaseFirestore.instance;
     final snapshot = await database.collection("uploadFileInfo").get();
     final uploadFileInfo = snapshot.docs
-        .map((doc) =>
-            UploadFileInfo.fromJson(doc.data() as Map<String, dynamic>))
+        .map((doc) => UploadFileInfo.fromJson(doc.data()))
         .toList();
     return uploadFileInfo;
   }
