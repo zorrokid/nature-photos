@@ -1,18 +1,4 @@
-# nature_photos
-
-## TODO
-
-- protect google maps api key (restrict usage to this android app)
-- separate api key for each version (dev, prod)
-
-# Development
-
-- https://console.cloud.google.com/welcome?project=flutter-nature-photos
-
-- signing
-
-    cd android
-    ./gradlew signingReport
+# Nature Photos App
 
 # Architecture
 
@@ -61,6 +47,21 @@ graph LR
   FirebaseImageAnalysisFunction --> Collection 
   FirebaseImageAnalysisFunction --> LabelDetection
 ```
+
+## TODO
+
+- protect google maps api key (restrict usage to this android app)
+- separate api key for each version (dev, prod)
+
+# Development
+
+- https://console.cloud.google.com/welcome?project=flutter-nature-photos
+
+- signing
+
+    cd android
+    ./gradlew signingReport
+
 
 ## Getting Started
 
