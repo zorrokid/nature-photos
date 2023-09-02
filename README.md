@@ -14,6 +14,44 @@
     cd android
     ./gradlew signingReport
 
+# Architecture
+
+```mermaid
+graph LR
+
+  subgraph User
+    MobileApp
+  end
+
+  subgraph Firebase
+    subgraph CloudStorage
+       Bucket 
+    end
+    subgraph Firestore
+       Collection 
+    end
+
+    subgraph CloudFunctions
+      FirebaseResizeFunction
+      FirebaseImageAnalysisFunction
+    end
+
+    subgraph Authentication
+      FirebaseAuthentication
+    end
+  end
+
+  MobileApp --> Bucket 
+  Collection --> MobileApp 
+  MobileApp --> Collection
+  MobileApp --> FirebaseAuthentication
+  FirebaseAuthentication --> MobileApp
+  Bucket --> FirebaseResizeFunction
+  FirebaseResizeFunction --> Bucket 
+  Bucket --> FirebaseImageAnalysisFunction
+  FirebaseImageAnalysisFunction --> Collection 
+```
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
