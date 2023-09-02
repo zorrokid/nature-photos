@@ -23,6 +23,10 @@ graph LR
     MobileApp
   end
 
+  subgraph GoogleMaps
+    Map
+  end
+
   subgraph Firebase
     subgraph CloudStorage
        Bucket 
@@ -45,6 +49,7 @@ graph LR
   Collection --> MobileApp 
   MobileApp --> Collection
   MobileApp --> FirebaseAuthentication
+  Map --> MobileApp
   FirebaseAuthentication --> MobileApp
   Bucket --> FirebaseResizeFunction
   FirebaseResizeFunction --> Bucket 
