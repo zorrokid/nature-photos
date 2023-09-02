@@ -27,6 +27,10 @@ graph LR
     Map
   end
 
+  subgraph VisionAI
+    LabelDetection
+  end
+
   subgraph Firebase
     subgraph CloudStorage
        Bucket 
@@ -55,6 +59,7 @@ graph LR
   FirebaseResizeFunction --> Bucket 
   Bucket --> FirebaseImageAnalysisFunction
   FirebaseImageAnalysisFunction --> Collection 
+  FirebaseImageAnalysisFunction --> LabelDetection
 ```
 
 ## Getting Started
