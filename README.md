@@ -14,6 +14,54 @@
     cd android
     ./gradlew signingReport
 
+# Architecture
+
+```mermaid
+graph LR
+
+  subgraph User
+    MobileApp
+  end
+
+  subgraph GoogleMaps
+    Map
+  end
+
+  subgraph VisionAI
+    LabelDetection
+  end
+
+  subgraph Firebase
+    subgraph CloudStorage
+       Bucket 
+    end
+    subgraph Firestore
+       Collection 
+    end
+
+    subgraph CloudFunctions
+      FirebaseResizeFunction
+      FirebaseImageAnalysisFunction
+    end
+
+    subgraph Authentication
+      FirebaseAuthentication
+    end
+  end
+
+  MobileApp --> Bucket 
+  Collection --> MobileApp 
+  MobileApp --> Collection
+  MobileApp --> FirebaseAuthentication
+  Map --> MobileApp
+  FirebaseAuthentication --> MobileApp
+  Bucket --> FirebaseResizeFunction
+  FirebaseResizeFunction --> Bucket 
+  Bucket --> FirebaseImageAnalysisFunction
+  FirebaseImageAnalysisFunction --> Collection 
+  FirebaseImageAnalysisFunction --> LabelDetection
+```
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
