@@ -18,14 +18,16 @@ graph LR
   end
 
   subgraph Firebase
-    subgraph CloudStorage
-       Bucket 
+    subgraph Storage
+       UploadBucket 
+       ImageResizeBucket
+       ImageAnalysisBucket
     end
     subgraph Firestore
        Collection 
     end
 
-    subgraph CloudFunctions
+    subgraph Functions
       FirebaseResizeFunction
       FirebaseImageAnalysisFunction
     end
@@ -35,17 +37,20 @@ graph LR
     end
   end
 
-  MobileApp --> Bucket 
+  MobileApp --> UploadBucket 
   Collection --> MobileApp 
   MobileApp --> Collection
   MobileApp --> FirebaseAuthentication
+  MobileApp --> Map
   Map --> MobileApp
   FirebaseAuthentication --> MobileApp
-  Bucket --> FirebaseResizeFunction
-  FirebaseResizeFunction --> Bucket 
-  Bucket --> FirebaseImageAnalysisFunction
+  UploadBucket --> FirebaseResizeFunction
+  FirebaseResizeFunction --> ImageResizeBucket 
+  FirebaseResizeFunction --> ImageAnalysisBucket 
+  ImageAnalysisBucket --> FirebaseImageAnalysisFunction
   FirebaseImageAnalysisFunction --> Collection 
   FirebaseImageAnalysisFunction --> LabelDetection
+  LabelDetection --> FirebaseImageAnalysisFunction
 ```
 
 ## TODO
