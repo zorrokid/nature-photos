@@ -4,7 +4,7 @@ import 'package:exif/exif.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nature_photos/models/upload_file_info.dart';
-import 'package:nature_photos/repositories/database_repository.dart';
+import 'package:nature_photos/repositories/upload_file_info_repository.dart';
 import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:path/path.dart';
 
@@ -14,7 +14,7 @@ import '../screens/start_screen.dart';
 
 class AddPhotoController extends GetxController {
   final storageRepository = Get.find<StorageRepository>();
-  final databaseRepository = Get.find<DatabaseRepository>();
+  final databaseRepository = Get.find<UploadFileInfoRepository>();
   final imagePicker = Get.find<ImagePicker>();
   final imageFile = Rx<File?>(null);
 
@@ -38,7 +38,7 @@ class AddPhotoController extends GetxController {
     final id = await databaseRepository.saveData(uploadFileInfo);
     if (id == null) return; // TODO: handle error
     await storageRepository.uploadFile(
-        'upload', imageFile.value!, '$id.${uploadFileInfo.extension}');
+        imageFile.value!, '$id.${uploadFileInfo.extension}');
     Get.snackbar("Upload", "File uploaded");
     imageFile.value = null;
     Get.to(() => const StartScreen(), binding: StartBinding());
