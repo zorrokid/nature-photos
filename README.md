@@ -7,6 +7,7 @@ graph LR
 
   subgraph User
     MobileApp
+    WebApp
   end
 
   subgraph GoogleMaps
@@ -41,8 +42,6 @@ graph LR
   Collection --> MobileApp 
   MobileApp --> Collection
   MobileApp --> FirebaseAuthentication
-  MobileApp --> Map
-  Map --> MobileApp
   FirebaseAuthentication --> MobileApp
   UploadBucket --> FirebaseResizeFunction
   FirebaseResizeFunction --> ImageResizeBucket 
@@ -51,6 +50,11 @@ graph LR
   FirebaseImageAnalysisFunction --> Collection 
   FirebaseImageAnalysisFunction --> LabelDetection
   LabelDetection --> FirebaseImageAnalysisFunction
+  ResizeBucket --> MobileApp
+  ResizeBucket --> WebApp
+  Collection --> WebApp
+  Map --> MobileApp
+  Map --> WebApp
 ```
 
 ## TODO
