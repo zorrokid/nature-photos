@@ -4,6 +4,7 @@ import 'package:exif/exif.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nature_photos/models/upload_file_info.dart';
+import 'package:nature_photos/repositories/config_repository.dart';
 import 'package:nature_photos/repositories/database_repository.dart';
 import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:path/path.dart';
@@ -15,6 +16,7 @@ import '../screens/start_screen.dart';
 class AddPhotoController extends GetxController {
   final storageRepository = Get.find<StorageRepository>();
   final databaseRepository = Get.find<DatabaseRepository>();
+  final configRepository = Get.find<ConfigRepository>();
   final imagePicker = Get.find<ImagePicker>();
   final imageFile = Rx<File?>(null);
 
@@ -28,6 +30,11 @@ class AddPhotoController extends GetxController {
 
   Future<void> uploadImage() async {
     if (imageFile.value == null) return;
+    final fileSizeInMbs = await imageFile.value!.length() / 1024 / 1024;
+    if (fileSizeInMbs > configRepository.maxUploadFileSize) {
+      Get.snackbar("Upload", "File too large");
+      return;
+    }
     final exif = await _readExif();
     final exifData = parseExif(exif);
     final uploadFileInfo = UploadFileInfo(
@@ -38,7 +45,7 @@ class AddPhotoController extends GetxController {
     final id = await databaseRepository.saveData(uploadFileInfo);
     if (id == null) return; // TODO: handle error
     await storageRepository.uploadFile(
-        'upload', imageFile.value!, '$id.${uploadFileInfo.extension}');
+        imageFile.value!, '$id.${uploadFileInfo.extension}');
     Get.snackbar("Upload", "File uploaded");
     imageFile.value = null;
     Get.to(() => const StartScreen(), binding: StartBinding());
