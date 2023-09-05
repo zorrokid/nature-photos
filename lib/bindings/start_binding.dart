@@ -3,7 +3,7 @@ import 'package:nature_photos/controllers/logout_controller.dart';
 import 'package:nature_photos/repositories/authentication_repository.dart';
 
 import '../controllers/start_controller.dart';
-import '../repositories/database_repository.dart';
+import '../repositories/upload_file_info_repository.dart';
 
 class StartBinding extends Bindings {
   @override
@@ -11,6 +11,6 @@ class StartBinding extends Bindings {
     Get.lazyPut<LogOutController>(() => LogOutController());
     Get.lazyPut<AuthenticationRepository>(() => AuthenticationRepository());
     Get.lazyPut<StartController>(() => StartController());
-    Get.lazyPut<DatabaseRepository>(() => DatabaseRepository());
+    Get.lazyPut<UploadFileInfoRepository>(() => UploadFileInfoRepository());
   }
 }

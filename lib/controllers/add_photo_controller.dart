@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nature_photos/models/upload_file_info.dart';
 import 'package:nature_photos/repositories/config_repository.dart';
-import 'package:nature_photos/repositories/database_repository.dart';
+import 'package:nature_photos/repositories/upload_file_info_repository.dart';
 import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:path/path.dart';
 
@@ -15,7 +15,7 @@ import '../screens/start_screen.dart';
 
 class AddPhotoController extends GetxController {
   final storageRepository = Get.find<StorageRepository>();
-  final databaseRepository = Get.find<DatabaseRepository>();
+  final databaseRepository = Get.find<UploadFileInfoRepository>();
   final configRepository = Get.find<ConfigRepository>();
   final imagePicker = Get.find<ImagePicker>();
   final imageFile = Rx<File?>(null);

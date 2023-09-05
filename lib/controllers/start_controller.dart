@@ -4,18 +4,22 @@ import 'package:nature_photos/bindings/map_bindig.dart';
 import 'package:nature_photos/models/upload_file_info.dart';
 import 'package:nature_photos/screens/map_screen.dart';
 
-import '../repositories/database_repository.dart';
+import '../repositories/upload_file_info_repository.dart';
 
 class StartController extends GetxController {
   final initializing = true.obs;
-  final databaseRepository = Get.find<DatabaseRepository>();
+  final databaseRepository = Get.find<UploadFileInfoRepository>();
 
   final uploadFileInfo = <UploadFileInfo>[].obs;
   @override
   void onInit() async {
     super.onInit();
-    uploadFileInfo.value = await databaseRepository.getUploadFileInfo();
+    databaseRepository.getUploadFileInfoUpdates(setUploadFileInfo);
     initializing.value = false;
+  }
+
+  void setUploadFileInfo(List<UploadFileInfo> uploadFileInfo) {
+    this.uploadFileInfo.value = uploadFileInfo;
   }
 
   void showMap(UploadFileInfo uploadFileInfo) {
