@@ -45,7 +45,7 @@ class AddPhotoController extends GetxController {
     final id = await databaseRepository.saveData(uploadFileInfo);
     if (id == null) return; // TODO: handle error
     await storageRepository.uploadFile(
-        imageFile.value!, '$id.${uploadFileInfo.extension}');
+        imageFile.value!, '$id${uploadFileInfo.extension}');
     Get.snackbar("Upload", "File uploaded");
     imageFile.value = null;
     Get.to(() => const StartScreen(), binding: StartBinding());
