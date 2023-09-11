@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 class ConfigKeys {
   static const maxUploadFileSizeMb = "MAX_UPLOAD_FILE_SIZE_MB";
+  static const maxImageWidth = "MAX_IMAGE_WIDTH";
+  static const maxImageHeight = "MAX_IMAGE_HEIGHT";
 }
 
 // Mostly based on this article:
@@ -30,6 +32,8 @@ class ConfigRepository {
   Future<void> _setDefaults() async => _remoteConfig.setDefaults(
         const {
           ConfigKeys.maxUploadFileSizeMb: 2 * 1024 * 1024,
+          ConfigKeys.maxImageWidth: 1200,
+          ConfigKeys.maxImageHeight: 1200,
         },
       );
 
@@ -51,4 +55,7 @@ class ConfigRepository {
 
   int get maxUploadFileSize =>
       _remoteConfig.getInt(ConfigKeys.maxUploadFileSizeMb);
+
+  int get maxImageWidth => _remoteConfig.getInt(ConfigKeys.maxImageWidth);
+  int get maxImageHeight => _remoteConfig.getInt(ConfigKeys.maxImageHeight);
 }

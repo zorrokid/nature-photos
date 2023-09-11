@@ -8,6 +8,7 @@ import 'package:nature_photos/repositories/config_repository.dart';
 import 'package:nature_photos/repositories/upload_file_info_repository.dart';
 import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:path/path.dart';
+import 'package:image/image.dart' as img;
 
 import '../bindings/start_binding.dart';
 import '../models/exif_data.dart';
@@ -30,20 +31,23 @@ class AddPhotoController extends GetxController {
 
   Future<void> uploadImage() async {
     if (imageFile.value == null) return;
-    final fileSizeInMbs = await imageFile.value!.length() / 1024 / 1024;
-    if (fileSizeInMbs > configRepository.maxUploadFileSize) {
-      Get.snackbar("Upload", "File too large");
-      return;
-    }
     final exif = await _readExif();
     final exifData = parseExif(exif);
     final uploadFileInfo = UploadFileInfo(
-      fileName: basenameWithoutExtension(imageFile.value!.path),
+      originalFileName: basenameWithoutExtension(imageFile.value!.path),
       extension: extension(imageFile.value!.path),
       exifData: exifData,
     );
     final id = await databaseRepository.saveData(uploadFileInfo);
     if (id == null) return; // TODO: handle error
+
+    final tmpImg = img.decodeImage(imageFile.value!.readAsBytesSync())!;
+    if (tmpImg.width > configRepository.maxImageWidth ||
+        tmpImg.height > configRepository.maxImageHeight) {
+      final resizedImage = img.copyResize(tmpImg, width: 1200);
+      imageFile.value = File(imageFile.value!.path)
+        ..writeAsBytesSync(img.encodeJpg(resizedImage));
+    }
     await storageRepository.uploadFile(
         imageFile.value!, '$id${uploadFileInfo.extension}');
     Get.snackbar("Upload", "File uploaded");

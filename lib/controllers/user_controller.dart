@@ -24,12 +24,13 @@ class UserController extends GetxController {
   }
 
   _setInitialScreen(User? user) {
-    if (user == null) {
+    // TODO: was trying to redirect before GetMaterialApp was initialized and caused exception
+    /*if (user == null) {
       print('user is null, go to sign up or sign in');
       Get.offAll(const SignUpOrSignInScreen(), binding: SignUpBinding());
     } else {
       print('user is logged in, go to start screen');
       Get.offAll(const StartScreen(), binding: StartBinding());
-    }
+    }*/
   }
 }

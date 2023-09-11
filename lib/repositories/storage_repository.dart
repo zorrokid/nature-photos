@@ -13,4 +13,13 @@ class StorageRepository {
       print(e);
     }
   }
+
+  Future<String> getThumbnailUrl(String fileName) async {
+    final storageRef =
+        FirebaseStorage.instanceFor(bucket: "gs://flutter-nature-photos-resize")
+            .ref();
+    final downloadUrl =
+        await storageRef.child("thumbnail/$fileName").getDownloadURL();
+    return downloadUrl;
+  }
 }
