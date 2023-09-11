@@ -17,9 +17,9 @@ class StartController extends GetxController {
   void onInit() async {
     super.onInit();
     databaseRepository.getFileInfoUpdates(setUploadFileInfo);
-    initializing.value = false;
     loadData().then((value) {
-      fileInfo.value = value;
+      fileInfo.addAll(value);
+      fileInfo.refresh();
       initializing.value = false;
     });
   }
@@ -41,7 +41,15 @@ class StartController extends GetxController {
 
   Future<String?> getDownloadUrl(FileInfo fileInfo) async {
     if (!fileInfo.thumbnail) return null;
-    final url = await storageRepository.getThumbnailUrl(fileInfo.fileName);
-    return url;
+    try {
+      final url = await storageRepository.getThumbnailUrl(fileInfo.fileName);
+      return url;
+    } catch (e) {
+      // TODO: thumbnail flag was set but file was not ready?
+      // E/StorageException(  521): StorageException has occurred.
+      // E/StorageException(  521): Object does not exist at location.
+      print(e);
+      return null;
+    }
   }
 }

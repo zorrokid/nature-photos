@@ -19,17 +19,18 @@ class StartScreen extends GetView<StartController> {
       ),
       drawer: const DefaultDrawer(),
       body: Center(
-          child: Obx(
-        () => controller.initializing.value == true
-            ? const CircularProgressIndicator()
-            : UploadFileInfoList(
-                uploadFileInfoList: controller.fileInfo,
-                onShow: (uploadFileInfo) {
-                  controller.showMap(uploadFileInfo);
-                },
-                downloadUrlProvider: controller.getDownloadUrl,
-              ),
-      )),
+        child: Obx(
+          () => controller.initializing.value == true
+              ? const CircularProgressIndicator()
+              : UploadFileInfoList(
+                  uploadFileInfoList: controller.fileInfo,
+                  onShow: (uploadFileInfo) {
+                    controller.showMap(uploadFileInfo);
+                  },
+                  downloadUrlProvider: controller.getDownloadUrl,
+                ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.to(
           () => const AddPhotoScreen(),
