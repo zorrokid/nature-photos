@@ -23,10 +23,11 @@ class StartScreen extends GetView<StartController> {
         () => controller.initializing.value == true
             ? const CircularProgressIndicator()
             : UploadFileInfoList(
-                uploadFileInfoList: controller.uploadFileInfo,
+                uploadFileInfoList: controller.fileInfo,
                 onShow: (uploadFileInfo) {
                   controller.showMap(uploadFileInfo);
                 },
+                downloadUrlProvider: controller.getDownloadUrl,
               ),
       )),
       floatingActionButton: FloatingActionButton(

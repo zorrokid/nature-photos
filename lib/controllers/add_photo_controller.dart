@@ -38,7 +38,7 @@ class AddPhotoController extends GetxController {
     final exif = await _readExif();
     final exifData = parseExif(exif);
     final uploadFileInfo = UploadFileInfo(
-      fileName: basenameWithoutExtension(imageFile.value!.path),
+      originalFileName: basenameWithoutExtension(imageFile.value!.path),
       extension: extension(imageFile.value!.path),
       exifData: exifData,
     );
