@@ -9,6 +9,7 @@ import 'package:nature_photos/repositories/upload_file_info_repository.dart';
 import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:path/path.dart';
 import 'package:image/image.dart' as img;
+import 'package:path_provider/path_provider.dart';
 
 import '../bindings/start_binding.dart';
 import '../models/exif_data.dart';
@@ -20,6 +21,7 @@ class AddPhotoController extends GetxController {
   final configRepository = Get.find<ConfigRepository>();
   final imagePicker = Get.find<ImagePicker>();
   final imageFile = Rx<File?>(null);
+  final uploading = false.obs;
 
   Future<void> pickImage() async {
     final image = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -31,6 +33,7 @@ class AddPhotoController extends GetxController {
 
   Future<void> uploadImage() async {
     if (imageFile.value == null) return;
+    uploading.value = true;
     final exif = await _readExif();
     final exifData = parseExif(exif);
     final uploadFileInfo = UploadFileInfo(
@@ -39,17 +42,36 @@ class AddPhotoController extends GetxController {
       exifData: exifData,
     );
     final id = await databaseRepository.saveData(uploadFileInfo);
-    if (id == null) return; // TODO: handle error
+    if (id == null) {
+      Get.snackbar("Upload", "Error saving upload file info");
+      return;
+    }
 
     final tmpImg = img.decodeImage(imageFile.value!.readAsBytesSync())!;
     if (tmpImg.width > configRepository.maxImageWidth ||
         tmpImg.height > configRepository.maxImageHeight) {
-      final resizedImage = img.copyResize(tmpImg, width: 1200);
-      imageFile.value = File(imageFile.value!.path)
-        ..writeAsBytesSync(img.encodeJpg(resizedImage));
+      Get.snackbar("Upload", "Resizing for upload");
+
+      // set the larger dimension to the max allowed and other to null
+      // copyResize will calculate the other dimension
+      final resizeWidth =
+          tmpImg.width > tmpImg.height ? configRepository.maxImageWidth : null;
+
+      final resizeHeight =
+          tmpImg.height > tmpImg.width ? configRepository.maxImageHeight : null;
+
+      final resizedImage =
+          img.copyResize(tmpImg, width: resizeWidth, height: resizeHeight);
+
+      final jpgData = img.encodeJpg(resizedImage);
+
+      await storageRepository.uploadData(
+          jpgData, '$id${uploadFileInfo.extension}');
+    } else {
+      await storageRepository.uploadFile(
+          imageFile.value!, '$id${uploadFileInfo.extension}');
     }
-    await storageRepository.uploadFile(
-        imageFile.value!, '$id${uploadFileInfo.extension}');
+    uploading.value = false;
     Get.snackbar("Upload", "File uploaded");
     imageFile.value = null;
     Get.to(() => const StartScreen(), binding: StartBinding());
