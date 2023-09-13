@@ -14,18 +14,15 @@ class UploadFileInfoRepository {
     return ref.id;
   }
 
-  void getFileInfoUpdates(Function(List<FileInfo>) callback) {
+  /*void getFileInfoUpdates(Function(List<FileInfo>) callback) {
     final database = FirebaseFirestore.instance;
-    database
-        .collection(uploadFileInfoCollection)
-        .snapshots()
-        .listen((snapshot) {
-      final uploadFileInfo = snapshot.docs
+    database.collection(uploadFileInfoCollection).snapshots().listen((event) {
+      final uploadFileInfo = event.docs
           .map((doc) => FileInfo.fromJson(doc.data(), doc.id))
           .toList();
       callback(uploadFileInfo);
     });
-  }
+  }*/
 
   Future<List<FileInfo>> getFileInfo() async {
     final database = FirebaseFirestore.instance;

@@ -15,17 +15,31 @@ class StartController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    databaseRepository.getFileInfoUpdates(setUploadFileInfo);
+    //databaseRepository.getFileInfoUpdates(setUploadFileInfo);
     loadData().then((value) {
+      debugPrint("Initial data loaded");
       fileInfo.addAll(value);
       fileInfo.refresh();
       initializing.value = false;
     });
   }
 
-  void setUploadFileInfo(List<FileInfo> fileInfo) {
-    this.fileInfo.value = fileInfo;
-  }
+  /*void setUploadFileInfo(List<FileInfo> fileInfo) {
+    debugPrint("Update received");
+    for (final info in fileInfo) {
+      final localInfo =
+          this.fileInfo.firstWhereOrNull((element) => element.id == info.id);
+      if (localInfo == null) {
+        debugPrint("Adding new file info");
+        this.fileInfo.add(info);
+      } else {
+        debugPrint("Updating file info");
+        final index = this.fileInfo.indexOf(localInfo);
+        this.fileInfo[index] = info;
+      }
+    }
+    this.fileInfo.refresh();
+  }*/
 
   void viewPhoto(FileInfo fileInfo) {
     Get.to(
@@ -36,6 +50,15 @@ class StartController extends GetxController {
 
   Future<List<FileInfo>> loadData() async {
     return await databaseRepository.getFileInfo();
+  }
+
+  Future<void> fetch() async {
+    initializing.value = true;
+    final fileInfo = await loadData();
+    this.fileInfo.clear();
+    this.fileInfo.addAll(fileInfo);
+    this.fileInfo.refresh();
+    initializing.value = false;
   }
 
   Future<String?> getDownloadUrl(FileInfo fileInfo) async {
