@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:nature_photos/bindings/add_photo_binding.dart';
 
 import '../controllers/start_controller.dart';
-import '../widgets/upload_file_info_list.dart';
+import '../widgets/file_list.dart';
 import 'add_photo_screen.dart';
 import '../widgets/default_drawer.dart';
 
@@ -22,10 +22,10 @@ class StartScreen extends GetView<StartController> {
         child: Obx(
           () => controller.initializing.value == true
               ? const CircularProgressIndicator()
-              : UploadFileInfoList(
+              : FileList(
                   uploadFileInfoList: controller.fileInfo,
                   onShow: (uploadFileInfo) {
-                    controller.showMap(uploadFileInfo);
+                    controller.viewPhoto(uploadFileInfo);
                   },
                   downloadUrlProvider: controller.getDownloadUrl,
                 ),
