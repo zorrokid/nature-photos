@@ -23,9 +23,13 @@ class _ImageContainerState extends State<ImageContainer> {
   @override
   void initState() {
     super.initState();
-    widget.downloadUrlProvider(widget.fileInfo).then((value) => setState(() {
+    widget.downloadUrlProvider(widget.fileInfo).then((value) {
+      if (mounted) {
+        setState(() {
           downloadUrl = value;
-        }));
+        });
+      }
+    });
   }
 
   @override
