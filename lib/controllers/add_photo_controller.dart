@@ -9,7 +9,6 @@ import 'package:nature_photos/repositories/upload_file_info_repository.dart';
 import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:path/path.dart';
 import 'package:image/image.dart' as img;
-import 'package:path_provider/path_provider.dart';
 
 import '../bindings/start_binding.dart';
 import '../models/exif_data.dart';

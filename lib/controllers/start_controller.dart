@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nature_photos/bindings/map_bindig.dart';
-import 'package:nature_photos/models/upload_file_info.dart';
+import 'package:nature_photos/bindings/view_photo_binding.dart';
 import 'package:nature_photos/repositories/storage_repository.dart';
-import 'package:nature_photos/screens/map_screen.dart';
+import 'package:nature_photos/screens/view_photo_screen.dart';
 import '../models/file_info.dart';
 import '../repositories/upload_file_info_repository.dart';
 
@@ -28,11 +27,11 @@ class StartController extends GetxController {
     this.fileInfo.value = fileInfo;
   }
 
-  void showMap(UploadFileInfo uploadFileInfo) {
-    final exif = uploadFileInfo.exifData;
-    if (exif.latitude == null || exif.longitude == null) return;
-    Get.to(() => MapScreen(location: LatLng(exif.latitude!, exif.longitude!)),
-        binding: MapBinding());
+  void viewPhoto(FileInfo fileInfo) {
+    Get.to(
+      () => ViewPhotoScreen(fileInfo: fileInfo),
+      binding: ViewPhotoBinding(),
+    );
   }
 
   Future<List<FileInfo>> loadData() async {
@@ -45,10 +44,7 @@ class StartController extends GetxController {
       final url = await storageRepository.getThumbnailUrl(fileInfo.fileName);
       return url;
     } catch (e) {
-      // TODO: thumbnail flag was set but file was not ready?
-      // E/StorageException(  521): StorageException has occurred.
-      // E/StorageException(  521): Object does not exist at location.
-      print(e);
+      debugPrint("Failed to get download url");
       return null;
     }
   }
