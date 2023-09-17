@@ -23,10 +23,13 @@ class ViewPhotoScreen extends GetView<ViewPhotoController> {
               downloadUrlProvider: controller.getDownloadUrl,
             ),
             ImageLabels(labels: fileInfo.labels),
-            TextButton(
-              onPressed: () => controller.showMap(fileInfo),
-              child: const Text('Show map'),
-            ),
+            fileInfo.exifData.latitude != null &&
+                    fileInfo.exifData.longitude != null
+                ? TextButton(
+                    onPressed: () => controller.showMap(fileInfo),
+                    child: const Text('Show map'),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),

@@ -24,9 +24,12 @@ class FileList extends StatelessWidget {
       itemBuilder: (context, index) {
         final fileInfo = uploadFileInfoList[index];
         return ListTile(
-          leading: ImageContainer(
-            fileInfo: fileInfo,
-            downloadUrlProvider: downloadUrlProvider,
+          leading: GestureDetector(
+            child: ImageContainer(
+              fileInfo: fileInfo,
+              downloadUrlProvider: downloadUrlProvider,
+            ),
+            onTap: () => onShow(fileInfo),
           ),
           title: Text(fileInfo.originalFileName),
           subtitle: Text(fileInfo.exifData.toString()),
