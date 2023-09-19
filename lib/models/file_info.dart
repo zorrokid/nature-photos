@@ -1,3 +1,5 @@
+import 'package:nature_photos/models/image_label.dart';
+
 import 'exif_data.dart';
 import 'upload_file_info.dart';
 
@@ -13,7 +15,7 @@ class FileInfo extends UploadFileInfo {
   });
 
   final String id;
-  final List<String> labels;
+  final Map<String, ImageLabel> labels;
   final bool resized;
   final bool thumbnail;
 
@@ -29,9 +31,30 @@ class FileInfo extends UploadFileInfo {
         exifData:
             ExifMetaData.fromJson(json['exifData'] as Map<String, dynamic>),
         labels: json.containsKey('labels')
-            ? (json['labels'] as List<dynamic>).map((e) => e as String).toList()
-            : <String>[],
+            ? (json['labels'] as Map<String, dynamic>)
+                .map((key, value) => MapEntry(key, ImageLabel.fromJson(value)))
+            : <String, ImageLabel>{},
         resized: json['resized'] as bool? ?? false,
         thumbnail: json['thumbnail'] as bool? ?? false,
       );
+
+  FileInfo copyWith({
+    String? id,
+    String? originalFileName,
+    String? extension,
+    ExifMetaData? exifData,
+    Map<String, ImageLabel>? labels,
+    bool? resized,
+    bool? thumbnail,
+  }) {
+    return FileInfo(
+      id: id ?? this.id,
+      originalFileName: originalFileName ?? this.originalFileName,
+      extension: extension ?? this.extension,
+      exifData: exifData ?? this.exifData,
+      labels: labels ?? this.labels,
+      resized: resized ?? this.resized,
+      thumbnail: thumbnail ?? this.thumbnail,
+    );
+  }
 }
