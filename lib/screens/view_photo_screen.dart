@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
 import 'package:nature_photos/controllers/view_photo_controller.dart';
 import 'package:nature_photos/models/file_info.dart';
 import 'package:nature_photos/widgets/image_container.dart';
@@ -11,6 +11,7 @@ class ViewPhotoScreen extends GetView<ViewPhotoController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.setFileInfo(fileInfo);
     return Scaffold(
       appBar: AppBar(
         title: const Text('View photo'),
@@ -22,7 +23,12 @@ class ViewPhotoScreen extends GetView<ViewPhotoController> {
               fileInfo: fileInfo,
               downloadUrlProvider: controller.getDownloadUrl,
             ),
-            ImageLabels(labels: fileInfo.labels),
+            Obx(() => controller.fileInfo.value != null
+                ? ImageLabels(
+                    labels: controller.fileInfo.value!.labels.values.toList(),
+                    labelSelectionCallback: controller.setLabelSelection,
+                  )
+                : const SizedBox()),
             fileInfo.exifData.latitude != null &&
                     fileInfo.exifData.longitude != null
                 ? TextButton(
