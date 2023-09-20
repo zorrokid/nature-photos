@@ -15,11 +15,14 @@ class FileInfo extends UploadFileInfo {
   });
 
   final String id;
-  final Map<String, ImageLabel> labels;
+  final List<ImageLabel> labels;
   final bool resized;
   final bool thumbnail;
 
   String get fileName => id + extension;
+
+  bool get hasLocation =>
+      exifData.latitude != null && exifData.longitude != null;
 
   static FileInfo fromJson(Map<String, dynamic> json, String id) => FileInfo(
         id: id,
@@ -33,7 +36,9 @@ class FileInfo extends UploadFileInfo {
         labels: json.containsKey('labels')
             ? (json['labels'] as Map<String, dynamic>)
                 .map((key, value) => MapEntry(key, ImageLabel.fromJson(value)))
-            : <String, ImageLabel>{},
+                .values
+                .toList()
+            : <ImageLabel>[],
         resized: json['resized'] as bool? ?? false,
         thumbnail: json['thumbnail'] as bool? ?? false,
       );
@@ -43,7 +48,7 @@ class FileInfo extends UploadFileInfo {
     String? originalFileName,
     String? extension,
     ExifMetaData? exifData,
-    Map<String, ImageLabel>? labels,
+    List<ImageLabel>? labels,
     bool? resized,
     bool? thumbnail,
   }) {

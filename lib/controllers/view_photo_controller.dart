@@ -14,8 +14,17 @@ class ViewPhotoController extends GetxController {
   final imageInfoRepository = Get.find<UploadFileInfoRepository>();
   final fileInfo = Rxn<FileInfo>();
 
-  void setFileInfo(FileInfo fileInfo) {
-    this.fileInfo.value = fileInfo;
+  void setLabels(List<ImageLabel> labels) {
+    if (fileInfo.value == null) return;
+    final finfo = fileInfo.value!.copyWith(labels: labels);
+    fileInfo.value = finfo;
+    fileInfo.refresh();
+  }
+
+  void setFileInfo(FileInfo finfo) {
+    fileInfo.value = finfo;
+    fileInfo.refresh();
+    imageInfoRepository.setLabelsCallback(setLabels, finfo);
   }
 
   void showMap(FileInfo fileInfo) {
