@@ -15,6 +15,19 @@ class UploadFileInfoRepository {
     return ref.id;
   }
 
+  void setLabelsCallback(
+      Function(List<ImageLabel>) callback, FileInfo fileInfo) {
+    FirebaseFirestore.instance
+        .collection(imageInfoCollection)
+        .doc(fileInfo.id)
+        .collection("labels")
+        .snapshots()
+        .listen((event) {
+      final labels =
+          event.docs.map((doc) => ImageLabel.fromJson(doc.data())).toList();
+      callback(labels);
+    });
+  }
   /*void getFileInfoUpdates(Function(List<FileInfo>) callback) {
     final database = FirebaseFirestore.instance;
     database.collection(uploadFileInfoCollection).snapshots().listen((event) {
@@ -36,7 +49,7 @@ class UploadFileInfoRepository {
       final labels = labelsSnapshot.docs
           .map((doc) => ImageLabel.fromJson(doc.data()))
           .toList();
-      finfo.labels.addAll(Map.fromIterable(labels, key: (e) => e.value));
+      finfo.labels.addAll(labels);
       fileInfo.add(finfo);
     }
     return fileInfo;
@@ -44,14 +57,11 @@ class UploadFileInfoRepository {
 
   Future<void> updateSelected(
       FileInfo fileInfo, ImageLabel label, bool selected) async {
-    final database = FirebaseFirestore.instance;
-
-    var ref = database
+    await FirebaseFirestore.instance
         .collection(imageInfoCollection)
         .doc(fileInfo.id)
         .collection("labels")
-        .doc(label.value);
-
-    await ref.update({"selected": selected});
+        .doc(label.value)
+        .update({"selected": selected});
   }
 }
