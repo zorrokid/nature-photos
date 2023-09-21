@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,6 +12,16 @@ class ViewPhotoController extends GetxController {
   final storageRepository = Get.find<StorageRepository>();
   final imageInfoRepository = Get.find<UploadFileInfoRepository>();
   final fileInfo = Rxn<FileInfo>();
+
+  final labelTextEditController = TextEditingController();
+
+  void addLabel() {
+    if (fileInfo.value == null) return;
+    final label = labelTextEditController.text;
+    if (label.isEmpty) return;
+    labelTextEditController.clear();
+    imageInfoRepository.addLabel(fileInfo.value!, label);
+  }
 
   void setLabels(List<ImageLabel> labels) {
     if (fileInfo.value == null) return;
