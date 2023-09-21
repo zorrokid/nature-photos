@@ -7,6 +7,33 @@ import 'package:nature_photos/widgets/image_labels.dart';
 class ViewPhotoScreen extends GetView<ViewPhotoController> {
   const ViewPhotoScreen({super.key});
 
+  void showAddLabelBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: controller.labelTextEditController,
+              decoration: const InputDecoration(
+                labelText: 'Label',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                controller.addLabel();
+                Get.back();
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +52,10 @@ class ViewPhotoScreen extends GetView<ViewPhotoController> {
                     ImageLabels(
                       labels: controller.fileInfo.value!.labels,
                       labelSelectionCallback: controller.setLabelSelection,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => showAddLabelBottomSheet(context),
+                      child: const Text('Add label'),
                     ),
                     controller.fileInfo.value!.hasLocation
                         ? TextButton(

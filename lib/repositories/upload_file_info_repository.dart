@@ -64,4 +64,19 @@ class UploadFileInfoRepository {
         .doc(label.value)
         .update({"selected": selected});
   }
+
+  Future<void> addLabel(FileInfo fileInfo, String label) async {
+    await FirebaseFirestore.instance
+        .collection(imageInfoCollection)
+        .doc(fileInfo.id)
+        .collection("labels")
+        .doc(label)
+        .set({
+      "value": label,
+      "selected": true,
+      "isManuallyAdded": true,
+      "score": 1.0,
+      "topicality": 1.0
+    });
+  }
 }
