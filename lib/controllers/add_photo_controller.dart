@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:exif/exif.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nature_photos/controllers/user_controller.dart';
 import 'package:nature_photos/models/upload_file_info.dart';
 import 'package:nature_photos/repositories/config_repository.dart';
 import 'package:nature_photos/repositories/upload_file_info_repository.dart';
@@ -19,6 +20,7 @@ class AddPhotoController extends GetxController {
   final databaseRepository = Get.find<UploadFileInfoRepository>();
   final configRepository = Get.find<ConfigRepository>();
   final imagePicker = Get.find<ImagePicker>();
+  final userController = Get.find<UserController>();
   final imageFile = Rx<File?>(null);
   final uploading = false.obs;
 
@@ -39,6 +41,7 @@ class AddPhotoController extends GetxController {
       originalFileName: basenameWithoutExtension(imageFile.value!.path),
       extension: extension(imageFile.value!.path),
       exifData: exifData,
+      userId: userController.firebaseUser.value!.uid,
     );
     final id = await databaseRepository.saveData(uploadFileInfo);
     if (id == null) {

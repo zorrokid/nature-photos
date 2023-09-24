@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nature_photos/bindings/view_photo_binding.dart';
+import 'package:nature_photos/controllers/user_controller.dart';
 import 'package:nature_photos/controllers/view_photo_controller.dart';
 import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:nature_photos/screens/view_photo_screen.dart';
@@ -12,6 +13,7 @@ class StartController extends GetxController {
   final imageInfoRepository = Get.find<UploadFileInfoRepository>();
   final storageRepository = Get.find<StorageRepository>();
   final viewPhotoController = Get.find<ViewPhotoController>();
+  final userController = Get.find<UserController>();
 
   final fileInfo = <FileInfo>[].obs;
 
@@ -53,7 +55,8 @@ class StartController extends GetxController {
   }
 
   Future<List<FileInfo>> loadData() async {
-    return await imageInfoRepository.getFileInfo();
+    return await imageInfoRepository
+        .getFileInfo(userController.firebaseUser.value!.uid);
   }
 
   Future<void> fetch() async {
