@@ -8,6 +8,7 @@ class FileInfo extends UploadFileInfo {
     required super.originalFileName,
     required super.extension,
     required super.exifData,
+    required super.userId,
     required this.id,
     required this.labels,
     required this.resized,
@@ -33,6 +34,7 @@ class FileInfo extends UploadFileInfo {
             json.containsKey('extension') ? json['extension'] as String : '',
         exifData:
             ExifMetaData.fromJson(json['exifData'] as Map<String, dynamic>),
+        userId: json.containsKey('userId') ? json['userId'] as String : '',
         labels: json.containsKey('labels')
             ? (json['labels'] as Map<String, dynamic>)
                 .map((key, value) => MapEntry(key, ImageLabel.fromJson(value)))
@@ -48,6 +50,7 @@ class FileInfo extends UploadFileInfo {
     String? originalFileName,
     String? extension,
     ExifMetaData? exifData,
+    String? userId,
     List<ImageLabel>? labels,
     bool? resized,
     bool? thumbnail,
@@ -57,6 +60,7 @@ class FileInfo extends UploadFileInfo {
       originalFileName: originalFileName ?? this.originalFileName,
       extension: extension ?? this.extension,
       exifData: exifData ?? this.exifData,
+      userId: userId ?? this.userId,
       labels: labels ?? this.labels,
       resized: resized ?? this.resized,
       thumbnail: thumbnail ?? this.thumbnail,
