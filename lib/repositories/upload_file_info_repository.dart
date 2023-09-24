@@ -15,6 +15,14 @@ class UploadFileInfoRepository {
     return ref.id;
   }
 
+  /* TODO: when logging out:
+   W/Firestore(21498): (24.7.0) [Firestore]: Listen for Query(target=Query(imageInfo/zxy1y6ZFXllfLhmTOheq/labels order by __name__);limitType=LIMIT_TO_FIRST) failed: Status{code=PERMISSION_DENIED, description=Missing or insufficient permissions., cause=null}
+E/flutter (21498): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: [cloud_firestore/permission-denied] The caller does not have permission to execute the specified operation.
+E/flutter (21498): #0      EventChannelExtension.receiveGuardedBroadcastStream (package:_flutterfire_internals/src/exception.dart:67:43)
+E/flutter (21498): #1      MethodChannelQuery.snapshots.<anonymous closure> (package:cloud_firestore_platform_interface/src/method_channel/method_channel_query.dart:155:18)
+E/flutter (21498): <asynchronous suspension>
+E/flutter (21498): 
+*/
   void setLabelsCallback(
       Function(List<ImageLabel>) callback, FileInfo fileInfo) {
     FirebaseFirestore.instance
@@ -38,9 +46,12 @@ class UploadFileInfoRepository {
     });
   }*/
 
-  Future<List<FileInfo>> getFileInfo() async {
+  Future<List<FileInfo>> getFileInfo(String userId) async {
     final database = FirebaseFirestore.instance;
-    final snapshot = await database.collection(imageInfoCollection).get();
+    final snapshot = await database
+        .collection(imageInfoCollection)
+        .where("userId", isEqualTo: userId)
+        .get();
     final fileInfo = <FileInfo>[];
     for (final doc in snapshot.docs) {
       final finfo = FileInfo.fromJson(doc.data(), doc.id);
