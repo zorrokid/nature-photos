@@ -5,10 +5,9 @@
 ```mermaid
 graph LR
 
-  subgraph User
-    MobileApp
-    WebApp
-  end
+  MobileApp
+
+  WebApp
 
   subgraph GoogleMaps
     Map
@@ -36,6 +35,7 @@ graph LR
     subgraph Authentication
       FirebaseAuthentication
     end
+
   end
 
   MobileApp --> UploadBucket 
@@ -50,8 +50,8 @@ graph LR
   FirebaseImageAnalysisFunction --> Collection 
   FirebaseImageAnalysisFunction --> LabelDetection
   LabelDetection --> FirebaseImageAnalysisFunction
-  ResizeBucket --> MobileApp
-  ResizeBucket --> WebApp
+  ImageResizeBucket --> MobileApp
+  ImageResizeBucket --> WebApp
   Collection --> WebApp
   Map --> MobileApp
   Map --> WebApp
