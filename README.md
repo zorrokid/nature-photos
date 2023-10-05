@@ -47,7 +47,7 @@ graph LR
   MobileApp --> Collection
   MobileApp --> FirebaseAuthentication 
   Collection --> MobileApp 
-  UploadBucket --> ResizeFunction
+  UploadBucket --> ImageResizeFunction
   ImageResizeFunction --> ImageResizeBucket 
   ImageResizeFunction --> ImageAnalysisBucket
   ImageResizeBucket --> UploadListenerFunction
