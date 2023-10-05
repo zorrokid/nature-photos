@@ -38,7 +38,10 @@ graph LR
       FirebaseAuthentication
     end
 
-    Hosting
+    
+    subgraph Hosting
+      Hosting
+    end
 
   end
 
