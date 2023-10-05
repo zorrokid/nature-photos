@@ -39,9 +39,7 @@ graph LR
     end
 
     
-    subgraph Hosting
-      Hosting
-    end
+    Hosting
 
   end
 
