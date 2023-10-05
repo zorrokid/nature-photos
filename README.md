@@ -51,7 +51,7 @@ graph LR
   MobileApp --> Collection
   MobileApp --> FirebaseAuthentication 
   Collection --> MobileApp 
-  UploadBucket --> FirebaseResizeFunction
+  UploadBucket --> ResizeFunction
   ImageResizeFunction --> ImageResizeBucket 
   ImageResizeFunction --> ImageAnalysisBucket
   ImageResizeBucket --> UploadListenerFunction
@@ -60,10 +60,10 @@ graph LR
   UploadListenerFunction --> Collection
   WebApp --> ServeImageInfoFunction
   ServeImageInfoFunction --> Collection
-  ImageAnalysisBucket --> FirebaseImageAnalysisFunction
+  ImageAnalysisBucket --> ImageAnalysisFunction
   ImageAnalysisFunction --> Collection 
   ImageAnalysisFunction --> LabelDetection
-  LabelDetection --> FirebaseImageAnalysisFunction
+  LabelDetection --> ImageAnalysisFunction
   Map --> MobileApp
   Map --> WebApp
 ```
