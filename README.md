@@ -18,6 +18,8 @@ graph LR
   end
 
   subgraph Firebase
+
+    Hosting
     subgraph Storage
        UploadBucket 
        ImageResizeBucket
@@ -37,10 +39,6 @@ graph LR
     subgraph Authentication
       FirebaseAuthentication
     end
-
-    
-    Hosting
-
   end
 
   FirebaseAuthentication --> MobileApp
