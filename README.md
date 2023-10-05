@@ -38,10 +38,12 @@ graph LR
       FirebaseAuthentication
     end
 
+    Hosting
+
   end
 
   FirebaseAuthentication --> MobileApp
-  FirebaseHosting --> WebApp
+  Hosting --> WebApp
   MobileApp --> UploadBucket
   MobileApp --> Collection
   MobileApp --> FirebaseAuthentication 
