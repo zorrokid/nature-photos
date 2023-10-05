@@ -28,8 +28,10 @@ graph LR
     end
 
     subgraph Functions
-      FirebaseResizeFunction
-      FirebaseImageAnalysisFunction
+      ImageResizeFunction
+      ImageAnalysisFunction
+      UploadListenerFunction
+      ServeImageInfoFunction
     end
 
     subgraph Authentication
@@ -44,11 +46,15 @@ graph LR
   MobileApp --> FirebaseAuthentication
   FirebaseAuthentication --> MobileApp
   UploadBucket --> FirebaseResizeFunction
-  FirebaseResizeFunction --> ImageResizeBucket 
-  FirebaseResizeFunction --> ImageAnalysisBucket 
+  ImageResizeFunction --> ImageResizeBucket 
+  ImageResizeFunction --> ImageAnalysisBucket
+  ImageResizeBucket --> UploadListenerFunction
+  UploadListenerFunction --> Collection
+  WebApp --> ServeImageInfoFunction
+  ServeImageInfoFunction --> Collection
   ImageAnalysisBucket --> FirebaseImageAnalysisFunction
-  FirebaseImageAnalysisFunction --> Collection 
-  FirebaseImageAnalysisFunction --> LabelDetection
+  ImageAnalysisFunction --> Collection 
+  ImageAnalysisFunction --> LabelDetection
   LabelDetection --> FirebaseImageAnalysisFunction
   ImageResizeBucket --> MobileApp
   ImageResizeBucket --> WebApp
