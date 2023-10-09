@@ -12,33 +12,43 @@ class LogInUserScreen extends GetView<LoginController> {
       appBar: AppBar(
         title: const Text('Log in user'),
       ),
-      body: Obx(
-        () => Column(
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Email',
+      body: Container(
+        margin: const EdgeInsets.all(24),
+        child: Obx(
+          () => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email',
+                  ),
+                  controller: controller.emailController,
+                  validator: controller.validator,
+                ),
               ),
-              controller: controller.emailController,
-              validator: controller.validator,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Password',
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                  ),
+                  controller: controller.passwordController,
+                  validator: controller.validator,
+                ),
               ),
-              controller: controller.passwordController,
-              validator: controller.validator,
-            ),
-            controller.status.value == UserFormStatus.failure &&
-                    controller.error.isNotEmpty
-                ? Text(
-                    controller.error.value,
-                    style: const TextStyle(color: Colors.red),
-                  )
-                : const SizedBox.shrink(),
-          ],
+              controller.status.value == UserFormStatus.failure &&
+                      controller.error.isNotEmpty
+                  ? Text(
+                      controller.error.value,
+                      style: const TextStyle(color: Colors.red),
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
         ),
       ),
       floatingActionButton:

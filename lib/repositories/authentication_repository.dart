@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:nature_photos/bindings/start_binding.dart';
 
 import '../screens/start_screen.dart';
 
@@ -95,7 +96,7 @@ auth/unauthorized-continue-uri
         "Password reset email sent",
         snackPosition: SnackPosition.BOTTOM,
       );
-      Get.to(() => const StartScreen());
+      Get.to(() => const StartScreen(), binding: StartBinding());
     } on FirebaseAuthException catch (e) {
       throw AuthFailure.fromCode(e.code);
     } on Exception catch (_) {

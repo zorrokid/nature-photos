@@ -9,7 +9,6 @@ import 'package:nature_photos/models/file_info.dart';
 import 'package:nature_photos/repositories/authentication_repository.dart';
 import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:nature_photos/repositories/upload_file_info_repository.dart';
-import 'package:nature_photos/screens/sign_up_or_sign_in_screen.dart';
 import 'package:nature_photos/screens/view_photo_screen.dart';
 
 // main controller for the whole app
@@ -31,6 +30,11 @@ class AppController extends GetxController {
       fileInfo.refresh();
       initializing.value = false;
     });
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 
   Future<List<FileInfo>> loadData() async {
@@ -67,12 +71,5 @@ class AppController extends GetxController {
       () => ViewPhotoScreen(),
       binding: ViewPhotoBinding(),
     );
-  }
-
-  Future<void> logOut() async {
-    await authenticationRepository.logOutUser();
-    fileInfo.clear();
-    Get.to(() => const SignUpOrSignInScreen());
-    Get.snackbar("Log out", "Logging user out");
   }
 }
