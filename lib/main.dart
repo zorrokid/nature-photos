@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nature_photos/controllers/app_controller.dart';
+import 'package:nature_photos/controllers/sign_up_or_sign_in_controller.dart';
 import 'package:nature_photos/controllers/view_photo_controller.dart';
 import 'package:nature_photos/repositories/authentication_repository.dart';
 import 'package:nature_photos/repositories/config_repository.dart';
@@ -20,12 +21,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) {
+    // dependencies for AppController
     Get.put(UploadFileInfoRepository());
     Get.put(StorageRepository());
     Get.put(UserController());
     Get.put(AuthenticationRepository());
     Get.put(ViewPhotoController());
+    // controllers for start screens (either logged in or non-logged in user)
     Get.put(AppController());
+    Get.put(SignUpOrSignInController());
   });
 
   await ConfigRepository().initialize();
