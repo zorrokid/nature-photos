@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nature_photos/controllers/app_controller.dart';
 
-import '../controllers/start_controller.dart';
 import '../widgets/file_list.dart';
 import '../widgets/default_drawer.dart';
 
-class StartScreen extends GetView<StartController> {
+class StartScreen extends GetView<AppController> {
   const StartScreen({super.key});
 
   @override

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:nature_photos/screens/start_screen.dart';
 
-import '../bindings/start_binding.dart';
 import '../enums.dart';
 import '../repositories/authentication_repository.dart';
 
@@ -32,7 +31,13 @@ class LoginController extends GetxController {
         "User logged in",
         snackPosition: SnackPosition.BOTTOM,
       );
-      Get.to(() => const StartScreen(), binding: StartBinding());
+
+      // TODO: should this be controlled rather by LoginController lifecycle?
+      email.value = "";
+      password.value = "";
+      error.value = "";
+
+      Get.to(() => const StartScreen());
     } on AuthFailure catch (e) {
       error.value = e.message;
       status.value = UserFormStatus.failure;

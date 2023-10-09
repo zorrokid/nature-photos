@@ -4,8 +4,22 @@ import 'package:nature_photos/controllers/view_photo_controller.dart';
 import 'package:nature_photos/widgets/image_container.dart';
 import 'package:nature_photos/widgets/image_labels.dart';
 
-class ViewPhotoScreen extends GetView<ViewPhotoController> {
-  const ViewPhotoScreen({super.key});
+class ViewPhotoScreen extends StatefulWidget {
+  ViewPhotoScreen({super.key});
+  final controller = Get.find<ViewPhotoController>();
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ViewPhotoScreenState();
+  }
+}
+
+class _ViewPhotoScreenState extends State<ViewPhotoScreen> {
+  @override
+  void dispose() {
+    super.dispose();
+    widget.controller.unsubscribe();
+  }
 
   void showAddLabelBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -16,14 +30,14 @@ class ViewPhotoScreen extends GetView<ViewPhotoController> {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              controller: controller.labelTextEditController,
+              controller: widget.controller.labelTextEditController,
               decoration: const InputDecoration(
                 labelText: 'Label',
               ),
             ),
             ElevatedButton(
               onPressed: () {
-                controller.addLabel();
+                widget.controller.addLabel();
                 Get.back();
               },
               child: const Text('Add'),
@@ -41,26 +55,27 @@ class ViewPhotoScreen extends GetView<ViewPhotoController> {
         title: const Text('View photo'),
       ),
       body: Center(
-        child: controller.fileInfo.value != null
+        child: widget.controller.fileInfo.value != null
             ? Obx(
                 () => Column(
                   children: [
                     ImageContainer(
-                      fileInfo: controller.fileInfo.value!,
-                      downloadUrlProvider: controller.getDownloadUrl,
+                      fileInfo: widget.controller.fileInfo.value!,
+                      downloadUrlProvider: widget.controller.getDownloadUrl,
                     ),
                     ImageLabels(
-                      labels: controller.fileInfo.value!.labels,
-                      labelSelectionCallback: controller.setLabelSelection,
+                      labels: widget.controller.fileInfo.value!.labels,
+                      labelSelectionCallback:
+                          widget.controller.setLabelSelection,
                     ),
                     ElevatedButton(
                       onPressed: () => showAddLabelBottomSheet(context),
                       child: const Text('Add label'),
                     ),
-                    controller.fileInfo.value!.hasLocation
+                    widget.controller.fileInfo.value!.hasLocation
                         ? TextButton(
-                            onPressed: () =>
-                                controller.showMap(controller.fileInfo.value!),
+                            onPressed: () => widget.controller
+                                .showMap(widget.controller.fileInfo.value!),
                             child: const Text('Show map'),
                           )
                         : const SizedBox(),

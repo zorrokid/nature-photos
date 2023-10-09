@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nature_photos/bindings/add_photo_binding.dart';
 import 'package:nature_photos/bindings/view_account_binding.dart';
+import 'package:nature_photos/controllers/app_controller.dart';
 import 'package:nature_photos/screens/view_account_screen.dart';
 
-import '../controllers/logout_controller.dart';
 import '../screens/add_photo_screen.dart';
 
-class DefaultDrawer extends GetView<LogOutController> {
+class DefaultDrawer extends GetView<AppController> {
   const DefaultDrawer({super.key});
 
   @override
@@ -27,8 +27,8 @@ class DefaultDrawer extends GetView<LogOutController> {
       ),
       ListTile(
         title: const Text('Account'),
-        onTap: () => Get.to(() => const ViewAccountScreen(),
-            binding: ViewAccountBinding()),
+        onTap: () =>
+            Get.to(() => ViewAccountScreen(), binding: ViewAccountBinding()),
       ),
       ListTile(
         title: const Text('Log out'),
