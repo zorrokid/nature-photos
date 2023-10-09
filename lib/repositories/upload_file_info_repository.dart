@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nature_photos/models/image_label.dart';
 
@@ -23,9 +25,9 @@ E/flutter (21498): #1      MethodChannelQuery.snapshots.<anonymous closure> (pac
 E/flutter (21498): <asynchronous suspension>
 E/flutter (21498): 
 */
-  void setLabelsCallback(
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>> setLabelsCallback(
       Function(List<ImageLabel>) callback, FileInfo fileInfo) {
-    FirebaseFirestore.instance
+    final subsription = FirebaseFirestore.instance
         .collection(imageInfoCollection)
         .doc(fileInfo.id)
         .collection("labels")
@@ -35,16 +37,8 @@ E/flutter (21498):
           event.docs.map((doc) => ImageLabel.fromJson(doc.data())).toList();
       callback(labels);
     });
+    return subsription;
   }
-  /*void getFileInfoUpdates(Function(List<FileInfo>) callback) {
-    final database = FirebaseFirestore.instance;
-    database.collection(uploadFileInfoCollection).snapshots().listen((event) {
-      final uploadFileInfo = event.docs
-          .map((doc) => FileInfo.fromJson(doc.data(), doc.id))
-          .toList();
-      callback(uploadFileInfo);
-    });
-  }*/
 
   Future<List<FileInfo>> getFileInfo(String userId) async {
     final database = FirebaseFirestore.instance;

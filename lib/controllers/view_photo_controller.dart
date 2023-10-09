@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,6 +17,8 @@ class ViewPhotoController extends GetxController {
   final fileInfo = Rxn<FileInfo>();
 
   final labelTextEditController = TextEditingController();
+
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? subscription;
 
   void addLabel() {
     if (fileInfo.value == null) return;
@@ -33,7 +38,7 @@ class ViewPhotoController extends GetxController {
   void setFileInfo(FileInfo finfo) {
     fileInfo.value = finfo;
     fileInfo.refresh();
-    imageInfoRepository.setLabelsCallback(setLabels, finfo);
+    subscription = imageInfoRepository.setLabelsCallback(setLabels, finfo);
   }
 
   void showMap(FileInfo fileInfo) {
@@ -57,5 +62,9 @@ class ViewPhotoController extends GetxController {
   void setLabelSelection(ImageLabel label, bool selected) {
     if (fileInfo.value == null) return;
     imageInfoRepository.updateSelected(fileInfo.value!, label, selected);
+  }
+
+  void unsubscribe() {
+    subscription?.cancel();
   }
 }

@@ -11,7 +11,6 @@ import 'package:nature_photos/repositories/storage_repository.dart';
 import 'package:path/path.dart';
 import 'package:image/image.dart' as img;
 
-import '../bindings/start_binding.dart';
 import '../models/exif_data.dart';
 import '../screens/start_screen.dart';
 
@@ -76,7 +75,7 @@ class AddPhotoController extends GetxController {
     uploading.value = false;
     Get.snackbar("Upload", "File uploaded");
     imageFile.value = null;
-    Get.to(() => const StartScreen(), binding: StartBinding());
+    Get.to(() => const StartScreen());
   }
 
   Future<Map<String, dynamic>> _readExif() async {

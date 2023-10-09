@@ -1,5 +1,3 @@
-import 'package:path/path.dart';
-
 import 'exif_data.dart';
 
 class UploadFileInfo {

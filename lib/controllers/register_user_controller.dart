@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:nature_photos/enums.dart';
 import 'package:nature_photos/repositories/authentication_repository.dart';
 
-import '../bindings/start_binding.dart';
 import '../screens/start_screen.dart';
 
 class RegisterUserController extends GetxController {
@@ -32,7 +31,7 @@ class RegisterUserController extends GetxController {
         "User registered",
         snackPosition: SnackPosition.BOTTOM,
       );
-      Get.to(() => const StartScreen(), binding: StartBinding());
+      Get.to(() => const StartScreen());
     } on AuthFailure catch (e) {
       error.value = e.message;
       status.value = UserFormStatus.failure;
