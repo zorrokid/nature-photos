@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:nature_photos/bindings/start_binding.dart';
 import 'package:nature_photos/enums.dart';
 import 'package:nature_photos/repositories/authentication_repository.dart';
 
@@ -31,7 +32,7 @@ class RegisterUserController extends GetxController {
         "User registered",
         snackPosition: SnackPosition.BOTTOM,
       );
-      Get.to(() => const StartScreen());
+      Get.to(() => const StartScreen(), binding: StartBinding());
     } on AuthFailure catch (e) {
       error.value = e.message;
       status.value = UserFormStatus.failure;

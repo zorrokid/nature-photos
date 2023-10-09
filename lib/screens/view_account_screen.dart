@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nature_photos/bindings/reset_password_binding.dart';
-import 'package:nature_photos/controllers/app_controller.dart';
+import 'package:nature_photos/controllers/logout_controller.dart';
 import 'package:nature_photos/controllers/user_controller.dart';
 
 import 'reset_password_screen.dart';
 
-class ViewAccountScreen extends GetView<AppController> {
+class ViewAccountScreen extends GetView<UserController> {
   ViewAccountScreen({super.key});
 
-  final UserController userController = Get.find<UserController>();
+  final LogOutController logOutController = Get.put(LogOutController());
 
   void _navigateToResetPassword() => Get.to(
         () => const ResetPasswordScreen(),
         binding: ResetPasswordBinding(),
       );
 
-  void _logOut() => controller.logOut();
+  void _logOut() => logOutController.logOut();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ViewAccountScreen extends GetView<AppController> {
       appBar: AppBar(
         title: const Text('View Account'),
       ),
-      body: userController.firebaseUser.value == null
+      body: controller.firebaseUser.value == null
           ? const Center(
               child: Text('Not logged in'),
             )
@@ -35,8 +35,9 @@ class ViewAccountScreen extends GetView<AppController> {
                   child: Row(
                     children: [
                       const Text('Logged in as: '),
-                      Obx(() =>
-                          Text(userController.firebaseUser.value?.email ?? '')),
+                      Obx(
+                        () => Text(controller.firebaseUser.value?.email ?? ''),
+                      ),
                     ],
                   ),
                 ),

@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nature_photos/controllers/sign_up_or_sign_in_controller.dart';
 
-import '../bindings/login_binding.dart';
-import '../bindings/register_binding.dart';
-import '../bindings/reset_password_binding.dart';
-import 'login_user_screen.dart';
-import 'register_user_screen.dart';
-import 'reset_password_screen.dart';
-
-class SignUpOrSignInScreen extends StatelessWidget {
+class SignUpOrSignInScreen extends GetView<SignUpOrSignInController> {
   const SignUpOrSignInScreen({super.key});
 
   @override
@@ -26,19 +20,15 @@ class SignUpOrSignInScreen extends StatelessWidget {
               'Welcome to nature photos!',
             ),
             TextButton(
-              onPressed: () {
-                Get.to(() => const LogInUserScreen(), binding: LoginBinding());
-              },
+              onPressed: () => controller.logIn(),
               child: const Text('Log in'),
             ),
             TextButton(
-              onPressed: () => Get.to(() => const RegisterUserScreen(),
-                  binding: RegisterBinding()),
+              onPressed: () => controller.register(),
               child: const Text('Register'),
             ),
             TextButton(
-              onPressed: () => Get.to(() => const ResetPasswordScreen(),
-                  binding: ResetPasswordBinding()),
+              onPressed: () => controller.resetPassword(),
               child: const Text('Reset password'),
             )
           ],

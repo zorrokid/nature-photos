@@ -30,10 +30,6 @@ class DefaultDrawer extends GetView<AppController> {
         onTap: () =>
             Get.to(() => ViewAccountScreen(), binding: ViewAccountBinding()),
       ),
-      ListTile(
-        title: const Text('Log out'),
-        onTap: () => controller.logOut(),
-      ),
     ]));
   }
 }
